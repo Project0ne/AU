@@ -1,4 +1,4 @@
-name: Run Python Script
+name: Run and Upload Script Output
 
 on:
   push:
@@ -6,7 +6,7 @@ on:
      - cron: '0 16 * * *' # 每天 UTC 时间 16:00 运行，对应北京时间 08:00
 
 jobs:
-  build:
+  run-script:
     runs-on: ubuntu-latest
 
     steps:
@@ -21,7 +21,7 @@ jobs:
         pip install -r requirements.txt
     - name: Run script
       run: python your_script.py
-    - name: Upload file
+    - name: Upload CSV file
       uses: actions/upload-artifact@v2
       with:
         name: gobrick-details
