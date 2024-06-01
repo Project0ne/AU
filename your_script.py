@@ -6,6 +6,7 @@ import pandas as pd
 import requests
 from requests.sessions import Session
 import concurrent.futures
+import ssl
 from tqdm import tqdm
 import time
 
@@ -24,7 +25,7 @@ color_data_fieldnames = ["main_id","id", "name", "lego_color_id", "font-color", 
 all_fieldnames = fieldnames + color_data_fieldnames
 
 # 基于当前时间生成文件名
-filename = "gobrick_detail_" + time.strftime("%Y-%m-%d_%H-%M-%S") + ".csv"
+filename = "gobrick_data_" + time.strftime("%Y-%m-%d_%H-%M-%S") + ".csv"
 
 # 使用 requests.Session() 来复用连接
 session = Session()
