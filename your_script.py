@@ -23,8 +23,8 @@ color_data_fieldnames = ["main_id","id", "name", "lego_color_id", "font-color", 
 # 合并所有的字段名
 all_fieldnames = fieldnames + color_data_fieldnames
 
-# 文件名
-filename = "gobrick_detail.csv"
+# 基于当前时间生成文件名
+filename = "gobrick_detail_" + time.strftime("%Y-%m-%d_%H-%M-%S") + ".csv"
 
 # 使用 requests.Session() 来复用连接
 session = Session()
