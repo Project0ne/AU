@@ -4,8 +4,8 @@ urllib3.disable_warnings()
 import csv
 import pandas as pd
 import requests
+from requests.sessions import Session
 import concurrent.futures
-import ssl
 from tqdm import tqdm
 import time
 
@@ -23,21 +23,23 @@ color_data_fieldnames = ["main_id","id", "name", "lego_color_id", "font-color", 
 # 合并所有的字段名
 all_fieldnames = fieldnames + color_data_fieldnames
 
-# 基于当前时间生成文件名
-filename = "gobrick_data_" + time.strftime("%Y-%m-%d_%H-%M-%S") + ".csv"
+# 文件名
+filename = "gobrick_detail.csv"
+
+# 使用 requests.Session() 来复用连接
+session = Session()
 
 def fetch_data(id):
     # 要从中获取数据的 URL
     url = f'https://gobricks.cn/frontend/v1/item/filter?product_id={id}&type=2&limit=96&offset=0'
-
     try:
-        # 发送 GET 请求到 URL 并存储响应
-        response = requests.get(url, verify=False)
+        # 使用 session 发送 GET 请求到 URL 并存储响应
+        response = session.get(url, verify=False)
     except requests.exceptions.ProxyError as e:
         print("ProxyError occurred:", e)
         return []
 
-    # 仅提取我们想要写入 CSV 文件的字段
+    # 解析响应数据
     data = response.json()['rows']
     filtered_data = []
     for d in data:
@@ -56,7 +58,10 @@ def fetch_data(id):
     
     return filtered_data
 
-with concurrent.futures.ThreadPoolExecutor() as executor:
+# 设置线程池的大小为 20
+max_workers = 20
+
+with concurrent.futures.ThreadPoolExecutor(max_workers=max_workers) as executor:
     # 以 utf-8 编码打开 CSV 文件并将数据写入其中
     with open(filename, "a", newline="", encoding="utf-8_sig") as csvfile:
         writer = csv.DictWriter(csvfile, fieldnames=all_fieldnames)
