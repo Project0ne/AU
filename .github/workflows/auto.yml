@@ -3,10 +3,13 @@ name: 运行并上传脚本输出
 on:
   workflow_dispatch:
     inputs:
-      script_name:
-        description: '要运行的脚本'
+      script_option:
+        description: '选择要运行的脚本'
         required: true
-        default: 'your_script.py'
+        type: choice
+        options:
+          - 'your_script'
+          - 'your_script1'
 
 jobs:
   run-script:
@@ -23,9 +26,9 @@ jobs:
         python -m pip install --upgrade pip
         pip install -r requirements.txt
     - name: 运行脚本
-      run: python ${{ github.event.inputs.script_name }}
+      run: python ${{ github.event.inputs.script_option }}.py
     - name: 上传 CSV 文件
       uses: actions/upload-artifact@v2
       with:
         name: csv_output
-        path: ${{ github.event.inputs.script_name }}_*.csv
+        path: ${{ github.event.inputs.script_option }}_*.csv
