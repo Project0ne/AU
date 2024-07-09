@@ -10,6 +10,7 @@ on:
         options:
           - 'your_script'
           - 'your_script1'
+          - '1'
 
 jobs:
   run-your-script:
@@ -68,7 +69,7 @@ jobs:
         python -m pip install --upgrade pip
         pip install -r requirements.txt
     - name: 运行脚本
-      run: python your_script.py
+      run: python 1.py
     - name: 上传 CSV 文件
       uses: actions/upload-artifact@v2
       with:
