@@ -1,4 +1,4 @@
-name: 运行并上传脚本输出
+name: 全部采集
 
 on:
   schedule:
