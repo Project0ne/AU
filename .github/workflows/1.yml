@@ -32,4 +32,4 @@ jobs:
       uses: actions/upload-artifact@v2
       with:
         name: daily_data
-        path: daily_data_*.csv
+        path: GBAD_*.xlsx
