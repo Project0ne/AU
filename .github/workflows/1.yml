@@ -1,8 +1,5 @@
 name: 全部采集
 
-on:
-  schedule:
-    - cron: '0 0 * * *' # 这是北京时间早上8点（UTC+8）
 
 jobs:
   run-1-py-daily:
