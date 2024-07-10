@@ -25,7 +25,7 @@ def main():
 
     all_data = []
     with requests.Session() as session:
-        with ThreadPoolExecutor(max_workers=10) as executor:
+        with ThreadPoolExecutor(max_workers=20) as executor:
             futures = {executor.submit(fetch_data, session, page): page for page in range(1, total_pages + 1)}
             for future in as_completed(futures):
                 rows = future.result()
