@@ -1,4 +1,4 @@
-name: 运行并上传脚本输出
+name: 运行main.py
 
 on:
   schedule:
@@ -26,8 +26,8 @@ jobs:
         python -m pip install --upgrade pip
         pip install -r requirements.txt
         pip install openpyxl # 安装 openpyxl
-    - name: 运行 1.py
-      run: python 1.py
+    - name: 运行 main.py
+      run: python main.py
     - name: 上传 CSV 文件
       uses: actions/upload-artifact@v2
       with:
